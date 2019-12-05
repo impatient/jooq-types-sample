@@ -1,11 +1,13 @@
+CREATE SEQUENCE shared_sequence START 10000;
+
 create table person (
-    id BIGSERIAL primary key,
+    id bigint default nextval('shared_sequence') primary key,
     name varchar(100) not null,
     surname varchar(100) not null
 );
 
 create table address (
-  id BIGSERIAL primary key,
+  id bigint default nextval('shared_sequence') primary key,
   person_id BIGINT references person(id),
   address_1 text,
   city text,
@@ -13,7 +15,7 @@ create table address (
 );
 
 create table phone (
-  id BIGSERIAL primary key,
+  id bigint default nextval('shared_sequence') primary key,
   person_id BIGINT references person(id),
   priority int default 0,
   digits varchar(15)
