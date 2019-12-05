@@ -22,6 +22,7 @@ tasks {
     register<org.gradle.api.tasks.JavaExec>("jooqerate") {
         main = "org.jooq.codegen.GenerationTool"
         args = listOf("jooq.xml")
+        classpath = sourceSets.main.get().runtimeClasspath
     }
 }
 
@@ -29,10 +30,10 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    implementation("org.jooq:jooq:3.10.1")
+    implementation("org.jooq:jooq:3.12.3")
     // ideally don't bundle these
-    implementation("org.jooq:jooq-meta:3.10.1")
-    implementation("org.jooq:jooq-codegen:3.10.1")
+    implementation("org.jooq:jooq-meta:3.12.3")
+    implementation("org.jooq:jooq-codegen:3.12.3")
 
     runtime("postgresql:postgresql:9.1-901.jdbc4")
 
