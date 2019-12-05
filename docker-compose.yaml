@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11.6
+    restart: always
+    environment:
+      POSTGRES_USER: jooq_sample
+      POSTGRES_PASSWORD: jooq_sample
+      POSTGRES_DB: jooq_sample
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "5432:5432"

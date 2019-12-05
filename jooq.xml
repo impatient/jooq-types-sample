@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd">
+  <!-- Configure the database connection here -->
+  <jdbc>
+    <driver>org.postgresql.Driver</driver>
+    <url>jdbc:postgresql://localhost:5432/jooq_sample</url>
+    <user>jooq_sample</user>
+    <password>jooq_sample</password>
+  </jdbc>
+
+  <generator>
+    <database>
+      <name>org.jooq.meta.postgres.PostgresDatabase</name>
+      <includes>.*</includes>
+
+      <inputSchema>jooq_sample</inputSchema>
+    </database>
+
+    <generate>
+      <!-- Generation flags: See advanced configuration properties -->
+    </generate>
+
+    <target>
+      <packageName>org.jooq.sample</packageName>
+
+      <!-- The destination directory of your generated classes -->
+      <directory>src/main/java</directory>
+    </target>
+  </generator>
+</configuration>
