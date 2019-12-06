@@ -37,6 +37,7 @@ create type udt_phone as (
   digits varchar(15)
 );
 
+-- not actually used due to https://github.com/jOOQ/jOOQ/issues/7406
 create type full_person_record as (
     person udt_person,
     addresses udt_address[],

@@ -22,7 +22,8 @@ tasks {
     register<org.gradle.api.tasks.JavaExec>("jooqerate") {
         main = "org.jooq.codegen.GenerationTool"
         args = listOf("jooq.xml")
-        classpath = sourceSets.main.get().runtimeClasspath
+        // use compileClasspath so jooq won't fail on invalid kt file
+        classpath = sourceSets.main.get().compileClasspath
     }
 }
 
@@ -35,7 +36,7 @@ dependencies {
     implementation("org.jooq:jooq-meta:3.12.3")
     implementation("org.jooq:jooq-codegen:3.12.3")
 
-    runtime("postgresql:postgresql:9.1-901.jdbc4")
+    implementation("org.postgresql:postgresql:42.2.8.jre7")
 
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

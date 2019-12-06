@@ -1,10 +1,16 @@
-create function all_persons() returns full_person_record[]
-AS $$ select array_agg(persons.fpr)
-    from (select ROW(ROW(p.id, p.name)::udt_person,
-    array_agg(ROW(a.id, a.address_1, a.city)::udt_address),
-    array_agg(ROW(p2.id, p2.digits)::udt_phone))::full_person_record as fpr
+create function all_persons()
+    -- https://github.com/jOOQ/jOOQ/issues/7406
+    returns table (person    udt_person, addresses udt_address[], phones    udt_phone[])
+AS $$
+select ROW (p.id, p.name)::udt_person,
+       addr,
+       pho
 from person p
-    left join address a on p.id = a.person_id
-    left join phone p2 on p.id = p2.person_id
-    group by p.id, p.name) as persons   ; $$
+         left join (select a.person_id, array_agg(ROW (a.id, a.address_1, a.city)::udt_address) as addr
+                    from address a
+                    group by a.person_id) as addr on p.id = addr.person_id
+         left join (select p2.person_id, array_agg(ROW (p2.id, p2.digits)::udt_phone) as pho
+                    from phone p2
+                    group by p2.person_id) as pho on p.id = pho.person_id;
+$$
     LANGUAGE SQL;
