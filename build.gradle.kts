@@ -2,8 +2,13 @@ plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.3.41"
     id("org.flywaydb.flyway").version("6.1.0")
+    id("com.avast.gradle.docker-compose").version("0.10.4")
     // Apply the application plugin to add support for building a CLI application.
     application
+}
+
+dockerCompose {
+    stopContainers = false
 }
 
 flyway {
@@ -20,11 +25,21 @@ repositories {
 }
 tasks {
     register<org.gradle.api.tasks.JavaExec>("jooqerate") {
+        dependsOn("composeUp")
         main = "org.jooq.codegen.GenerationTool"
         args = listOf("jooq.xml")
         // use compileClasspath so jooq won't fail on invalid kt file
         classpath = sourceSets.main.get().compileClasspath
     }
+
+    register("reset") {
+        dependsOn("composeDown", "flywayMigrate", "jooqerate")
+    }
+
+    register("migrate") {
+        dependsOn("flywayMigrate", "jooqerate")
+    }
+
 }
 
 dependencies {
