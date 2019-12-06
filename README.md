@@ -1,4 +1,4 @@
-##Sample of Jooq with user defined types
+## Sample of Jooq with user defined types
 
 Attended the 2Q PG Conf.  One of the presenters, Hettie Dombrovskaya talked about her solution to O-R
  impedance, which involved a layer inside of Postgres that generated/aggregated/returned custom types.  Presently
